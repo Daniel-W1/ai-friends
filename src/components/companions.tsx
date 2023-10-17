@@ -1,9 +1,10 @@
+'use client'
+
 import { Companion } from '@prisma/client'
 import Image from 'next/image';
-import React from 'react'
 import { Card, CardContent, CardFooter } from './ui/card';
 import { MessageCircle } from 'lucide-react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface CompanionsProps {
     data: (Companion & {
@@ -14,6 +15,11 @@ interface CompanionsProps {
 }
 
 const Companions = ({ data }: CompanionsProps) => {
+    const router = useRouter();
+
+    const handleClick = (id: string) => {
+        router.push(`/chat/${id}`)
+    }
 
     if (data.length === 0) {
         return (
@@ -35,11 +41,11 @@ const Companions = ({ data }: CompanionsProps) => {
             {data.map((companion) => (
                 <Card
                     key={companion.id}
-                    className='bg-primary/10 p-4 pb-0 shadow-xl transition-all hover:shadow-2xl '
+                    className='bg-primary/10 p-4 pb-0 shadow-xl transition-all hover:shadow-2xl'
                 >
-                    <Link href={`chat/${companion.id}`}>
                         <CardContent
-                            className='text-center'
+                            className='text-center cursor-pointer'
+                            onClick={() => handleClick(companion.id)}
                         >
                             <div
                                 style={
@@ -89,7 +95,6 @@ const Companions = ({ data }: CompanionsProps) => {
                                 />
                             </div>
                         </CardFooter>
-                    </Link>
                 </Card>
             ))}
         </div>

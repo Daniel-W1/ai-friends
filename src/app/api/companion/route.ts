@@ -1,29 +1,26 @@
 import db from '@/lib/prismadb'
+import { checkSubscription } from '@/lib/subscription';
 import { currentUser } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request){           
     const body = await req.json();
     const user = await currentUser();
+    const isPro = await checkSubscription();
+
     const {name, src, description, seed, instructions, categoryId} = body;
         
     try {
         if(!user){
-            return {
-                status: 401,
-                body: {
-                    error: 'Unauthorized'
-                }
-            }
+            return new NextResponse("Unauthorized", { status: 401 });
         }
     
         if(!name || !src || !description || !seed || !instructions || !categoryId){
-            return {
-                status: 400,
-                body: {
-                    error: 'Missing parameters'
-                }
-            }
+            return new NextResponse("Missing required fields", { status: 400 });
+        }
+
+        if(!isPro){
+            return new NextResponse("Unauthorized", { status: 401 });
         }
         
         const companion = await db.companion.create({

@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import { Category } from '@prisma/client'
 import { cn } from '@/lib/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -13,6 +12,7 @@ interface CategoriesBarProps {
 const CategoriesBar = ({
     categories
 }: CategoriesBarProps) => {
+
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -37,7 +37,6 @@ const CategoriesBar = ({
 
         router.push(url)
     }
-
 
     
     return (

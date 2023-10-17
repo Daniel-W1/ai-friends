@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.25.1",
@@ -37,9 +38,11 @@
     "react-dom": "latest",
     "react-hook-form": "^7.47.0",
     "react-spinners": "^0.13.8",
+    "stripe": "^13.11.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "latest",

@@ -84,14 +84,13 @@ const ChatHeader = ({ companion }: ChatHeaderProps) => {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <Link href={`/companions/${companion.id}`}>
                                 <DropdownMenuItem
                                     className="flex items-center cursor-pointer"
+                                    onClick={() => router.push(`/companion/${companion.id}`)}
                                 >
                                         <Edit size={16} className="mr-2" />
                                         Edit
                                 </DropdownMenuItem>
-                            </Link>
                             
                             <DropdownMenuItem
                                 className="flex items-center cursor-pointer"

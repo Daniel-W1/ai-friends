@@ -1,4 +1,5 @@
 import db from '@/lib/prismadb'
+import { checkSubscription } from '@/lib/subscription';
 import { currentUser } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
@@ -7,6 +8,7 @@ export async function PUT(req: Request,
 ) {
     const body = await req.json();
     const user = await currentUser();
+    const isPro = await checkSubscription();
     const { name, src, description, seed, instructions, categoryId } = body;
 
     try {
@@ -20,6 +22,10 @@ export async function PUT(req: Request,
 
         if (!name || !src || !description || !seed || !instructions || !categoryId) {
             return new NextResponse("Missing parameters", { status: 400 });
+        }
+
+        if (!isPro){
+            return new NextResponse("Unauthorized", { status: 401 });
         }
 
         await db.companion.update({
